@@ -1,105 +1,90 @@
-// function validateEmail(email) {
-//     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//     return re.test(email);
-// }
+const input = document.querySelector('#email-input');
+const field = document.querySelector('#email-field');
+
+
+let activeImg = ``;
+
+function searchImages(){
+    var clientId = '44Z98e1z8r_uY6qbbNoYIEee_qbIvG5wSYqbDa1XYMI';
+    var query =  document.querySelector('#query-input').value;
+    var url = 'https://api.unsplash.com/photos/random/?client_id='+clientId+'&query='+query;
+
+    fetch(url)
+        .then(function(data) {
+            return data.json();
+        })
+        .then(function(data) {
+            let result = `<img src="${data.urls.regular}">`;
+            activeImg = `${data.urls.regular}`;
+            $('.image-wrapper').html(result);
+        });
+
+
+}
+function saveImage(){
+  if(document.getElementById(`${input.value}`)) {
+
+    var liActive = document.getElementById(`${input.value}`);
+    var image = document.createElement("img");
+    image.src = activeImg;
+    liActive.prepend(image);
+
+  } else {
+    console.log(input.value+" saved: "+activeImg);
+
+    var li = document.createElement("li");
+    var img = document.createElement("img");
+    var p = document.createElement("p");
+
+    p.textContent = input.value;
+    img.src = activeImg;
+    li.appendChild(img);
+    li.appendChild(p);
+    li.id = input.value;
+
+    $("#saveList").prepend(li);
+  } 
+}
+
+function checkForm(form)
+  {
+    if(input.value == "") {
+      field.classList.add('empty-invalid');
+      form.inputfield.focus();
+
+      return false;
+    }
+
+    var re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
+
+    if(!re.test(input.value)) {
+      field.classList.add('email-invalid');
+      input.focus();
+      return false;
+    }
+
+    return true;
   
-// function validate() {
-
-//     const div = document.createElement('div');
-
-//     const $result = $("#result");
-//     const email = $("#email").val();
-//     $result.text("");
-  
-//     if (validateEmail(email)) {
-
-//         div.className = 'item';
-//         div.innerHTML = `
-//         <img src="https://picsum.photos/350/350">
-//         <h3>Email:</h6>
-//         <p id="email"></p>
-//         `;
-
-//         document.getElementById('result').appendChild(div);
-
-//         $result.text(email + " is valid :)");
-//         $result.css("color", "green");
-//     } else {
-//         $result.text(email + " is not valid :(");
-//         $result.css("color", "red");
-//     }
-//     return false;
-// }
-  
-// $("#validate").on("click", validate);
-
-
-
-
-// function addRow() {
-//     const div = document.createElement('div');
-  
-//     div.className = 'row';
-  
-//     div.innerHTML = `
-//       <input type="text" name="name" value="" />
-//       <input type="text" name="value" value="" />
-//       <label> 
-//         <input type="checkbox" name="check" value="1" /> Checked? 
-//       </label>
-//       <input type="button" value="-" onclick="removeRow(this)" />
-//     `;
-  
-//     document.getElementById('content').appendChild(div);
-//   }
-  
-//   function removeRow(input) {
-//     document.getElementById('content').removeChild(input.parentNode);
-//   }
-
-
-
-
-
-
-// function addRow() {
-//     const div = document.createElement('div');
-  
-//     div.className = 'row';
-  
-//     div.innerHTML = `
-//       <input type="text" name="name" value="" />
-//       <input type="text" name="value" value="" />
-//       <label> 
-//         <input type="checkbox" name="check" value="1" /> Checked? 
-//       </label>
-//       <input type="button" value="-" onclick="removeRow(this)" />
-//     `;
-  
-//     document.getElementById('content').appendChild(div);
-//   }
-  
-//   function removeRow(input) {
-//     document.getElementById('content').removeChild(input.parentNode);
-//   }
-
-
-
-
-function addRow() {
-    const div = document.createElement('div');
-  
-    div.className = 'row';
-  
-    div.innerHTML = `
-        <img src="https://picsum.photos/350/350" alt="">
-        <h3>Email:</h6>
-        <p id="email"></p>
-    `;
-  
-    document.getElementById('results').appendChild(div);
   }
-  
-  function removeRow(input) {
-    document.getElementById('results').removeChild(input.parentNode);
-  }
+
+
+
+
+$('#email-field').submit(function(event){
+    event.preventDefault();
+    field.className = "";
+
+    checkForm();
+    if(checkForm() == true){
+      if(!activeImg == '') 
+      {
+        saveImage();
+      }
+    }
+});
+
+$('#searchField').submit(function(event){
+    event.preventDefault();
+    searchImages();
+});
+
