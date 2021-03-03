@@ -30,7 +30,6 @@ function saveImage(){
     liActive.prepend(image);
 
   } else {
-    console.log(input.value+" saved: "+activeImg);
 
     var li = document.createElement("li");
     var img = document.createElement("img");
