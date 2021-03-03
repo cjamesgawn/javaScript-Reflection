@@ -28,7 +28,11 @@
         .saved-wrapper {
             width: 48%;
             ul {
+                padding: 0;
+                margin: 0;
                 li {
+                    padding: 40px 0;
+                    margin: 0;
                     list-style-type: none;
                     background-color: #f5f5f5;
                     //opacity: .5;
