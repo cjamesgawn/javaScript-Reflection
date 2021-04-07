@@ -5,7 +5,7 @@ const field = document.querySelector('#email-field');
 let activeImg = ``;
 
 function searchImages(){
-    var clientId = '7mLGkdcJUsLvwq_PO2_pa3s_nkXqiQhac32gYI_0RKs';
+    var clientId = '44Z98e1z8r_uY6qbbNoYIEee_qbIvG5wSYqbDa1XYMI';
     var query =  document.querySelector('#query-input').value;
     var url = 'https://api.unsplash.com/photos/random/?client_id='+clientId+'&query='+query;
 
